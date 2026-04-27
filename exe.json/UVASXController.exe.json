@@ -1,0 +1,18 @@
+{
+  "process": "UVASXController.exe",
+  "windows": [
+    {
+      "hwnd": 132694,
+      "pid": 6984,
+      "title": "ASX-560 Controller for LabSolutions UV-Vis",
+      "class_name": "HwndWrapper[UVASXController.exe;;54182117-b1e9-4cb2-a527-c2a631b54817]",
+      "rect": [
+        26,
+        26,
+        826,
+        605
+      ],
+      "controls": []
+    }
+  ]
+}

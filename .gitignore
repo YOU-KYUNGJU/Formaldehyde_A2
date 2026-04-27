@@ -1,0 +1,11 @@
+.env
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Generated control dumps
+controls/
+
+# Do not publish vendor manuals or local reference PDFs.
+*.pdf

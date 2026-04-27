@@ -1,0 +1,749 @@
+{
+  "process": "UVVisLauncher.exe",
+  "windows": [
+    {
+      "hwnd": 328568,
+      "pid": 12144,
+      "title": "UV Launcher",
+      "class_name": "WindowsForms10.Window.8.app.0.34f5582_r24_ad1",
+      "rect": [
+        104,
+        104,
+        602,
+        584
+      ],
+      "controls": [
+        {
+          "hwnd": 131312,
+          "class_name": "WindowsForms10.STATIC.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad11",
+          "text": "Option",
+          "rect": [
+            309,
+            323,
+            407,
+            342
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad11"
+          ]
+        },
+        {
+          "hwnd": 131554,
+          "class_name": "WindowsForms10.STATIC.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad12",
+          "text": "UVProbe\r\nFile Viewer",
+          "rect": [
+            395,
+            407,
+            493,
+            437
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad12"
+          ]
+        },
+        {
+          "hwnd": 131534,
+          "class_name": "WindowsForms10.STATIC.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad13",
+          "text": "Automatic\r\nAnalysis",
+          "rect": [
+            305,
+            407,
+            403,
+            437
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad13"
+          ]
+        },
+        {
+          "hwnd": 131546,
+          "class_name": "WindowsForms10.BUTTON.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad14",
+          "text": "",
+          "rect": [
+            419,
+            356,
+            467,
+            404
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad14"
+          ]
+        },
+        {
+          "hwnd": 196870,
+          "class_name": "WindowsForms10.BUTTON.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad15",
+          "text": "",
+          "rect": [
+            329,
+            356,
+            377,
+            404
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad15"
+          ]
+        },
+        {
+          "hwnd": 131630,
+          "class_name": "WindowsForms10.STATIC.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad16",
+          "text": "",
+          "rect": [
+            129,
+            560,
+            574,
+            576
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad16"
+          ]
+        },
+        {
+          "hwnd": 197310,
+          "class_name": "WindowsForms10.Window.8.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad17",
+          "text": "",
+          "rect": [
+            128,
+            466,
+            578,
+            565
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad17"
+          ]
+        },
+        {
+          "hwnd": 262844,
+          "class_name": "WindowsForms10.STATIC.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad18",
+          "text": "",
+          "rect": [
+            488,
+            528,
+            578,
+            558
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad17",
+            "34f5582r24ad18"
+          ]
+        },
+        {
+          "hwnd": 328178,
+          "class_name": "WindowsForms10.BUTTON.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad19",
+          "text": "",
+          "rect": [
+            509,
+            480,
+            557,
+            528
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad17",
+            "34f5582r24ad19"
+          ]
+        },
+        {
+          "hwnd": 131438,
+          "class_name": "WindowsForms10.STATIC.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad110",
+          "text": "",
+          "rect": [
+            398,
+            528,
+            488,
+            558
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad17",
+            "34f5582r24ad110"
+          ]
+        },
+        {
+          "hwnd": 131962,
+          "class_name": "WindowsForms10.BUTTON.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad111",
+          "text": "",
+          "rect": [
+            419,
+            480,
+            467,
+            528
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad17",
+            "34f5582r24ad111"
+          ]
+        },
+        {
+          "hwnd": 131964,
+          "class_name": "WindowsForms10.STATIC.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad112",
+          "text": "",
+          "rect": [
+            308,
+            528,
+            398,
+            558
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad17",
+            "34f5582r24ad112"
+          ]
+        },
+        {
+          "hwnd": 197482,
+          "class_name": "WindowsForms10.BUTTON.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad113",
+          "text": "",
+          "rect": [
+            329,
+            480,
+            377,
+            528
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad17",
+            "34f5582r24ad113"
+          ]
+        },
+        {
+          "hwnd": 197432,
+          "class_name": "WindowsForms10.STATIC.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad114",
+          "text": "Operation Guide",
+          "rect": [
+            218,
+            528,
+            308,
+            558
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad17",
+            "34f5582r24ad114"
+          ]
+        },
+        {
+          "hwnd": 197428,
+          "class_name": "WindowsForms10.BUTTON.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad115",
+          "text": "",
+          "rect": [
+            239,
+            480,
+            287,
+            528
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad17",
+            "34f5582r24ad115"
+          ]
+        },
+        {
+          "hwnd": 131590,
+          "class_name": "WindowsForms10.STATIC.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad116",
+          "text": "Help",
+          "rect": [
+            128,
+            528,
+            218,
+            558
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad17",
+            "34f5582r24ad116"
+          ]
+        },
+        {
+          "hwnd": 131600,
+          "class_name": "WindowsForms10.BUTTON.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad117",
+          "text": "",
+          "rect": [
+            149,
+            480,
+            197,
+            528
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad17",
+            "34f5582r24ad117"
+          ]
+        },
+        {
+          "hwnd": 262844,
+          "class_name": "WindowsForms10.STATIC.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad118",
+          "text": "",
+          "rect": [
+            488,
+            528,
+            578,
+            558
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad118"
+          ]
+        },
+        {
+          "hwnd": 328178,
+          "class_name": "WindowsForms10.BUTTON.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad119",
+          "text": "",
+          "rect": [
+            509,
+            480,
+            557,
+            528
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad119"
+          ]
+        },
+        {
+          "hwnd": 131438,
+          "class_name": "WindowsForms10.STATIC.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad120",
+          "text": "",
+          "rect": [
+            398,
+            528,
+            488,
+            558
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad120"
+          ]
+        },
+        {
+          "hwnd": 131962,
+          "class_name": "WindowsForms10.BUTTON.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad121",
+          "text": "",
+          "rect": [
+            419,
+            480,
+            467,
+            528
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad121"
+          ]
+        },
+        {
+          "hwnd": 131964,
+          "class_name": "WindowsForms10.STATIC.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad122",
+          "text": "",
+          "rect": [
+            308,
+            528,
+            398,
+            558
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad122"
+          ]
+        },
+        {
+          "hwnd": 197482,
+          "class_name": "WindowsForms10.BUTTON.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad123",
+          "text": "",
+          "rect": [
+            329,
+            480,
+            377,
+            528
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad123"
+          ]
+        },
+        {
+          "hwnd": 197432,
+          "class_name": "WindowsForms10.STATIC.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad124",
+          "text": "Operation Guide",
+          "rect": [
+            218,
+            528,
+            308,
+            558
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad124"
+          ]
+        },
+        {
+          "hwnd": 197428,
+          "class_name": "WindowsForms10.BUTTON.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad125",
+          "text": "",
+          "rect": [
+            239,
+            480,
+            287,
+            528
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad125"
+          ]
+        },
+        {
+          "hwnd": 131590,
+          "class_name": "WindowsForms10.STATIC.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad126",
+          "text": "Help",
+          "rect": [
+            128,
+            528,
+            218,
+            558
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad126"
+          ]
+        },
+        {
+          "hwnd": 131600,
+          "class_name": "WindowsForms10.BUTTON.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad127",
+          "text": "",
+          "rect": [
+            149,
+            480,
+            197,
+            528
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad127"
+          ]
+        },
+        {
+          "hwnd": 131594,
+          "class_name": "WindowsForms10.STATIC.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad128",
+          "text": "Environmental\r\nSettings",
+          "rect": [
+            129,
+            407,
+            227,
+            437
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad128"
+          ]
+        },
+        {
+          "hwnd": 131812,
+          "class_name": "WindowsForms10.STATIC.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad129",
+          "text": "Time Course",
+          "rect": [
+            395,
+            285,
+            493,
+            315
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad129"
+          ]
+        },
+        {
+          "hwnd": 196634,
+          "class_name": "WindowsForms10.STATIC.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad130",
+          "text": "Photometric",
+          "rect": [
+            305,
+            285,
+            403,
+            315
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad130"
+          ]
+        },
+        {
+          "hwnd": 131584,
+          "class_name": "WindowsForms10.STATIC.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad131",
+          "text": "Quantitation",
+          "rect": [
+            215,
+            285,
+            313,
+            315
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad131"
+          ]
+        },
+        {
+          "hwnd": 131456,
+          "class_name": "WindowsForms10.STATIC.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad132",
+          "text": "Spectrum",
+          "rect": [
+            125,
+            285,
+            223,
+            315
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad132"
+          ]
+        },
+        {
+          "hwnd": 131606,
+          "class_name": "WindowsForms10.BUTTON.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad133",
+          "text": "",
+          "rect": [
+            149,
+            356,
+            197,
+            404
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad133"
+          ]
+        },
+        {
+          "hwnd": 131622,
+          "class_name": "WindowsForms10.BUTTON.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad134",
+          "text": "",
+          "rect": [
+            419,
+            236,
+            467,
+            284
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad134"
+          ]
+        },
+        {
+          "hwnd": 131620,
+          "class_name": "WindowsForms10.BUTTON.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad135",
+          "text": "",
+          "rect": [
+            329,
+            236,
+            377,
+            284
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad135"
+          ]
+        },
+        {
+          "hwnd": 131598,
+          "class_name": "WindowsForms10.BUTTON.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad136",
+          "text": "",
+          "rect": [
+            239,
+            236,
+            287,
+            284
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad136"
+          ]
+        },
+        {
+          "hwnd": 131612,
+          "class_name": "WindowsForms10.BUTTON.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad137",
+          "text": "",
+          "rect": [
+            149,
+            236,
+            197,
+            284
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad137"
+          ]
+        },
+        {
+          "hwnd": 131618,
+          "class_name": "WindowsForms10.STATIC.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad138",
+          "text": "Application",
+          "rect": [
+            125,
+            443,
+            223,
+            462
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad138"
+          ]
+        },
+        {
+          "hwnd": 131616,
+          "class_name": "WindowsForms10.STATIC.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad139",
+          "text": "Manage",
+          "rect": [
+            125,
+            323,
+            223,
+            342
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad139"
+          ]
+        },
+        {
+          "hwnd": 328810,
+          "class_name": "WindowsForms10.STATIC.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad140",
+          "text": "Analysis",
+          "rect": [
+            125,
+            203,
+            223,
+            222
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad140"
+          ]
+        },
+        {
+          "hwnd": 131592,
+          "class_name": "WindowsForms10.Window.8.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad141",
+          "text": "",
+          "rect": [
+            128,
+            188,
+            578,
+            189
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad141"
+          ]
+        },
+        {
+          "hwnd": 394340,
+          "class_name": "WindowsForms10.BUTTON.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad142",
+          "text": "",
+          "rect": [
+            553,
+            110,
+            574,
+            131
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad142"
+          ]
+        },
+        {
+          "hwnd": 66672,
+          "class_name": "WindowsForms10.BUTTON.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad143",
+          "text": "",
+          "rect": [
+            575,
+            110,
+            596,
+            131
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad143"
+          ]
+        },
+        {
+          "hwnd": 66674,
+          "class_name": "WindowsForms10.BUTTON.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad144",
+          "text": "",
+          "rect": [
+            530,
+            139,
+            578,
+            187
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad144"
+          ]
+        },
+        {
+          "hwnd": 66676,
+          "class_name": "WindowsForms10.Window.8.app.0.34f5582_r24_ad1",
+          "classnn": "34f5582r24ad145",
+          "text": "",
+          "rect": [
+            128,
+            131,
+            398,
+            181
+          ],
+          "path": [
+            "HWND_328568",
+            "34f5582r24ad145"
+          ]
+        }
+      ]
+    }
+  ]
+}
