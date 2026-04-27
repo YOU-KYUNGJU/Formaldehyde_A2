@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """
 Button 1 calibration automation for ASX-560 Controller.
 

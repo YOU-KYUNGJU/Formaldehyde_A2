@@ -1,8 +1,8 @@
 # Formaldehyde_A2
 
-Shimadzu LabSolutions UV-Vis 자동화 준비 프로젝트입니다.
+Shimadzu LabSolutions UV-Vis와 ASX-560 Controller 자동화 준비 프로젝트입니다.
 
-이 저장소는 LabSolutions UV-Vis 관련 실행 파일의 윈도우/컨트롤 정보를 추출하고, 추출된 JSON과 운영 가이드를 바탕으로 AutoHotkey 또는 Python 기반 자동화 스크립트를 설계하기 위한 자료를 담고 있습니다.
+이 저장소는 LabSolutions UV-Vis 관련 실행 파일의 윈도우/컨트롤 정보를 추출하고, 추출된 JSON과 운영 로그를 바탕으로 Python 좌표 자동화를 보정하기 위한 자료를 담고 있습니다.
 
 ## 구성
 
@@ -11,10 +11,20 @@ Shimadzu LabSolutions UV-Vis 자동화 준비 프로젝트입니다.
 | `dump_classnn.py` | 실행 중인 Windows 프로그램의 top-level window와 자식 컨트롤 정보를 JSON으로 저장하는 도구 |
 | `button1_calibration.py` | 1번 버튼 Calibration 준비 흐름을 좌표 기반으로 실행하는 자동화 스크립트 |
 | `exe.json/` | 실제 실행 파일에서 추출한 컨트롤 dump 결과 |
+| `docs/` | 운영 설계, 로그 정책, 테스트 체크리스트, 테스트 시나리오 |
 | `CONTROL_ANALYSIS.md` | `exe.json`과 운영 가이드 기반 자동화 분석 문서 |
 | `BUTTON1_CALIBRATION_WORKFLOW.md` | 1번 버튼 Calibration 자동화 구조와 좌표 기준 문서 |
 | `requirements.txt` | Python 실행 의존성 |
 | `openai_codex_example.py` | OpenAI API 호출 예제 |
+
+## 문서
+
+| 문서 | 용도 |
+|---|---|
+| `docs/architecture.md` | 자동화 레이어, 상태 모델, 실행 흐름 |
+| `docs/logging-policy.md` | 로그 종류, 스크린샷 정책, 실패 원인 판독 기준 |
+| `docs/manual-test-checklist.md` | 운영 PC에서 수동으로 확인할 체크리스트 |
+| `docs/test-scenarios.md` | 날짜 파일명, Read/Edit/Save 실패 시나리오 |
 
 ## 설치
 
@@ -50,7 +60,7 @@ python dump_classnn.py --exe UVVisLauncher.exe --out exe.json
   - 런처 버튼은 ClassNN 또는 창 기준 상대좌표로 자동화할 수 있습니다.
 - `UVASXController.exe`
   - 창은 인식되지만 내부 컨트롤은 추출되지 않습니다.
-  - 창 위치/크기 고정 후 좌표 기반 자동화가 적합합니다.
+  - 창 위치와 크기를 고정한 뒤 좌표 기반으로 자동화합니다.
 
 자세한 내용은 `CONTROL_ANALYSIS.md`를 참고하세요.
 
@@ -65,36 +75,34 @@ python button1_calibration.py --dry-run
 특정 날짜로 확인하려면 `YYYYMMDD` 형식으로 지정합니다.
 
 ```powershell
-python button1_calibration.py --date 20260427 --dry-run
+python button1_calibration.py --date 20260428 --dry-run
 ```
 
-실행 전 `ASX-560 Controller for LabSolutions UV-Vis` 창이 열려 있어야 합니다.
-
-```powershell
-python button1_calibration.py
-```
-
-실행 중 실패하면 `logs/` 폴더에 단계별 로그, 현재 창 목록, 스크린샷이 저장됩니다.
+실행 전 `UV Launcher` 또는 `ASX-560 Controller for LabSolutions UV-Vis` 창이 열려 있어야 합니다.
 
 ```powershell
 python button1_calibration.py --log-dir logs
 ```
 
+실행 중 실패하면 `logs/` 폴더에 단계별 로그, 현재 창 목록, 스크린샷이 저장됩니다.
+
 ## 권장 자동화 흐름
 
 ```text
 LabSolutions UV-Vis Launcher 실행
-→ 측정 앱 선택
-→ 측정 앱 창 생성 확인
-→ Connect
-→ 초기화 OK 처리
-→ Auto Zero 또는 Baseline
-→ 샘플 측정
-→ 필요한 경우 ASX-560 Controller 좌표 기반 조작
+→ Automatic Analysis 실행
+→ ASX-560 Controller 창 생성 확인
+→ Read로 기존 .vasm 열기
+→ Edit로 Analysis Setting 진입
+→ Analysis1 File Name을 Std_Test_YYYYMMDD.vqud로 치환
+→ Analysis2 File Name을 Unk_Test_YYYYMMDD.vqud로 치환
+→ Save As and Close
+→ C:\UVVis-Data\Parameter\YYYY\MM\YYYYMMDD_YKJ_ASX_Test_Std_Final.vasm 저장
 ```
 
 ## 주의
 
 - public 저장소에는 원본 제조사 매뉴얼 PDF를 포함하지 않습니다.
-- `.env` 파일과 API 키는 저장소에 올리지 않습니다.
+- `logs/`, `__pycache__/`, `.env`, `*.pdf`는 저장소에 올리지 않습니다.
 - Windows GUI 자동화는 해상도, DPI 배율, 창 위치에 영향을 받을 수 있습니다.
+- 실제 장비 제어 전에는 `--dry-run`과 수동 테스트 체크리스트를 먼저 확인합니다.
