@@ -6,6 +6,7 @@ __pycache__/
 
 # Generated control dumps
 controls/
+logs/
 
 # Do not publish vendor manuals or local reference PDFs.
 *.pdf
