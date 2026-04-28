@@ -8,6 +8,8 @@ because its internal controls are not exposed as regular Win32 child controls.
 import argparse
 import ctypes
 import os
+import shutil
+import subprocess
 import time
 from dataclasses import dataclass
 from datetime import datetime
@@ -16,6 +18,7 @@ from pathlib import Path
 
 ASX_TITLE = "ASX-560 Controller for LabSolutions UV-Vis"
 LAUNCHER_TITLE = "UV Launcher"
+LAUNCHER_PROCESS_NAME = "UVVisLauncher.exe"
 SETTING_TITLE = "Analysis Setting - ASX-560 - Quantitation"
 OPEN_DIALOG_TITLES = ("Open", "열기")
 SAVE_DIALOG_TITLES = ("Save", "Save As", "다른 이름으로 저장", "저장")
@@ -41,16 +44,17 @@ pyautogui = None
 pyperclip = None
 win32con = None
 win32gui = None
+psutil = None
 
 
 class AutomationLogger:
-    def __init__(self, enabled=True, log_dir="logs"):
+    def __init__(self, enabled=True, log_dir="logs", file_prefix="button1_calibration"):
         self.enabled = enabled
         self.log_path = None
         if enabled:
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             Path(log_dir).mkdir(parents=True, exist_ok=True)
-            self.log_path = Path(log_dir) / f"button1_calibration_{timestamp}.log"
+            self.log_path = Path(log_dir) / f"{file_prefix}_{timestamp}.log"
 
     def write(self, message):
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -91,7 +95,15 @@ class AutomationLogger:
             pyautogui.screenshot(str(image_path))
             self.write(f"Screenshot saved: {image_path}")
         except Exception as exc:
-            self.write(f"Screenshot failed: {exc}")
+            self.write(f"PyAutoGUI screenshot failed: {exc}")
+            try:
+                from PIL import ImageGrab
+
+                image = ImageGrab.grab()
+                image.save(str(image_path))
+                self.write(f"Screenshot saved via PIL.ImageGrab: {image_path}")
+            except Exception as fallback_exc:
+                self.write(f"Fallback screenshot failed: {fallback_exc}")
 
 
 LOGGER = AutomationLogger(enabled=False)
@@ -133,6 +145,105 @@ def load_gui_dependencies():
     pyperclip = imported_pyperclip
     win32con = imported_win32con
     win32gui = imported_win32gui
+
+
+def load_process_dependencies():
+    global psutil
+
+    if psutil:
+        return
+
+    try:
+        import psutil as imported_psutil
+    except ImportError as exc:
+        raise SystemExit(
+            "Missing process dependency. Run: pip install -r requirements.txt"
+        ) from exc
+
+    psutil = imported_psutil
+
+
+def is_launcher_process_running():
+    load_process_dependencies()
+    for process in psutil.process_iter(["name"]):
+        try:
+            process_name = process.info.get("name")
+        except Exception:
+            continue
+        if process_name and process_name.lower() == LAUNCHER_PROCESS_NAME.lower():
+            return True
+    return False
+
+
+def iter_launcher_candidates(explicit_path=None):
+    if explicit_path:
+        yield explicit_path
+
+    env_path = os.environ.get("UVVIS_LAUNCHER_PATH")
+    if env_path:
+        yield env_path
+
+    which_path = shutil.which(LAUNCHER_PROCESS_NAME)
+    if which_path:
+        yield which_path
+
+    common_roots = [
+        os.environ.get("ProgramFiles"),
+        os.environ.get("ProgramFiles(x86)"),
+        os.environ.get("ProgramW6432"),
+        r"C:\Shimadzu",
+    ]
+    relative_candidates = [
+        Path("LabSolutions") / "UVVis" / LAUNCHER_PROCESS_NAME,
+        Path("Shimadzu") / "LabSolutions" / "UVVis" / LAUNCHER_PROCESS_NAME,
+        Path("LabSolutions UV-Vis") / LAUNCHER_PROCESS_NAME,
+    ]
+    for root in common_roots:
+        if not root:
+            continue
+        for relative_path in relative_candidates:
+            yield str(Path(root) / relative_path)
+
+
+def resolve_launcher_path(explicit_path=None):
+    for candidate in iter_launcher_candidates(explicit_path=explicit_path):
+        normalized = os.path.expandvars(os.path.expanduser(candidate))
+        if os.path.isfile(normalized):
+            return normalized
+    return None
+
+
+def launch_uvvis_launcher(launcher_path=None, dry_run=False):
+    resolved_path = resolve_launcher_path(explicit_path=launcher_path)
+    if not resolved_path:
+        raise FileNotFoundError(
+            "UVVisLauncher.exe path not found. Pass --launcher-path or set UVVIS_LAUNCHER_PATH."
+        )
+
+    LOGGER.write(f"Launching UVVis launcher: {resolved_path}")
+    if dry_run:
+        print(f"[dry-run] launch UVVis launcher: {resolved_path}")
+        return None
+
+    subprocess.Popen([resolved_path], close_fds=True)
+    time.sleep(2.0)
+    return resolved_path
+
+
+def ensure_launcher_ready(launcher_path=None, dry_run=False):
+    launcher_hwnd = wait_for_window_optional(LAUNCHER_TITLE, timeout=1)
+    if launcher_hwnd:
+        return launcher_hwnd
+
+    if not dry_run and is_launcher_process_running():
+        LOGGER.write("UVVisLauncher.exe process is running. Waiting for UV Launcher window.")
+        return wait_for_window(LAUNCHER_TITLE, timeout=15)
+
+    LOGGER.write("UVVisLauncher.exe is not running. Launching it now.")
+    launch_uvvis_launcher(launcher_path=launcher_path, dry_run=dry_run)
+    if dry_run:
+        return None
+    return wait_for_window(LAUNCHER_TITLE, timeout=30)
 
 
 def build_paths(run_date, source_vasm):
@@ -291,13 +402,13 @@ def open_vasm_from_read_dialog(paths, dry_run=False):
     time.sleep(1.5)
 
 
-def ensure_asx_controller_open(dry_run=False):
+def ensure_asx_controller_open(dry_run=False, launcher_path=None):
     asx_hwnd = wait_for_window_optional(ASX_TITLE, timeout=3)
     if asx_hwnd:
         return asx_hwnd
 
     LOGGER.write("ASX Controller window is not open. Trying UV Launcher > Automatic Analysis.")
-    launcher_hwnd = wait_for_window(LAUNCHER_TITLE, timeout=10)
+    launcher_hwnd = ensure_launcher_ready(launcher_path=launcher_path, dry_run=dry_run)
     activate_window(launcher_hwnd, target_size=LAUNCHER_TARGET_SIZE, target_position=(20, 20))
     click_reference(
         launcher_hwnd,
@@ -329,7 +440,7 @@ def save_vasm_from_save_dialog(paths, dry_run=False):
     time.sleep(0.8)
 
 
-def run_button1_calibration(paths, dry_run=False):
+def run_button1_calibration(paths, dry_run=False, launcher_path=None):
     LOGGER.write("Calibration automation values:")
     LOGGER.write(f"- date: {paths.date_text}")
     LOGGER.write(f"- standard: {paths.standard_file_name}")
@@ -352,7 +463,9 @@ def run_button1_calibration(paths, dry_run=False):
     load_gui_dependencies()
     LOGGER.dump_windows("before automation")
 
-    asx_hwnd = ensure_asx_controller_open(dry_run)
+    ensure_launcher_ready(launcher_path=launcher_path, dry_run=dry_run)
+
+    asx_hwnd = ensure_asx_controller_open(dry_run, launcher_path=launcher_path)
     activate_window(asx_hwnd, target_size=ASX_TARGET_SIZE)
     click_reference(asx_hwnd, ASX_REFERENCE_SIZE, READ_BUTTON, dry_run, "ASX Read")
     LOGGER.screenshot("after_read_click")
@@ -398,6 +511,10 @@ def parse_args():
         help="Existing .vasm file to open from the Read dialog.",
     )
     parser.add_argument(
+        "--launcher-path",
+        help="Explicit path to UVVisLauncher.exe. Falls back to UVVIS_LAUNCHER_PATH or common install locations.",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Print generated values and coordinates without clicking.",
@@ -432,7 +549,7 @@ def main():
         pyautogui.PAUSE = 0.15
         pyautogui.FAILSAFE = True
 
-    run_button1_calibration(paths, dry_run=args.dry_run)
+    run_button1_calibration(paths, dry_run=args.dry_run, launcher_path=args.launcher_path)
 
 
 if __name__ == "__main__":
