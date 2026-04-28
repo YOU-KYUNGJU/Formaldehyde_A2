@@ -10,10 +10,12 @@ Shimadzu LabSolutions UV-Vis와 ASX-560 Controller 자동화 준비 프로젝트
 |---|---|
 | `dump_classnn.py` | 실행 중인 Windows 프로그램의 top-level window와 자식 컨트롤 정보를 JSON으로 저장하는 도구 |
 | `button1_calibration.py` | 1번 버튼 Calibration 준비 흐름을 좌표 기반으로 실행하는 자동화 스크립트 |
+| `button2_sampleMeasurement.py` | 2번 버튼 Sample Measurement 준비 흐름을 좌표 기반으로 실행하는 자동화 스크립트 |
 | `exe.json/` | 실제 실행 파일에서 추출한 컨트롤 dump 결과 |
 | `docs/` | 운영 설계, 로그 정책, 테스트 체크리스트, 테스트 시나리오 |
 | `CONTROL_ANALYSIS.md` | `exe.json`과 운영 가이드 기반 자동화 분석 문서 |
 | `BUTTON1_CALIBRATION_WORKFLOW.md` | 1번 버튼 Calibration 자동화 구조와 좌표 기준 문서 |
+| `BUTTON2_SAMPLE_MEASUREMENT_WORKFLOW.md` | 2번 버튼 Sample Measurement 자동화 구조와 좌표 기준 문서 |
 | `requirements.txt` | Python 실행 의존성 |
 | `openai_codex_example.py` | OpenAI API 호출 예제 |
 
@@ -78,13 +80,49 @@ python button1_calibration.py --dry-run
 python button1_calibration.py --date 20260428 --dry-run
 ```
 
-실행 전 `UV Launcher` 또는 `ASX-560 Controller for LabSolutions UV-Vis` 창이 열려 있어야 합니다.
+`UVVisLauncher.exe`가 실행 중이 아니면 자동으로 먼저 실행을 시도합니다.
 
 ```powershell
 python button1_calibration.py --log-dir logs
 ```
 
 실행 중 실패하면 `logs/` 폴더에 단계별 로그, 현재 창 목록, 스크린샷이 저장됩니다.
+
+런처 경로를 자동으로 찾지 못하면 명시적으로 지정할 수 있습니다.
+
+```powershell
+python button1_calibration.py --log-dir logs --launcher-path "C:\Path\To\UVVisLauncher.exe"
+```
+
+## 2번 버튼 Sample Measurement 자동화
+
+실제 클릭 없이 생성될 파일명, 랙 선택 계획, 기준 좌표를 먼저 확인합니다.
+
+```powershell
+python button2_sampleMeasurement.py --date 20260428 --sample-count 178 --dry-run
+```
+
+실행 시 입력창이 열리며 시료 수 `1`부터 `240`까지 입력할 수 있습니다. 빈값으로 확인하면 기본값 `180`을 사용합니다.
+
+```powershell
+python button2_sampleMeasurement.py --log-dir logs
+```
+
+기본 동작은 아래와 같습니다.
+
+- `UVVisLauncher.exe`가 꺼져 있으면 먼저 실행
+- `Automatic Analysis`를 통해 `ASX-560 Controller` 실행
+- `C:\UVVis-Data\Parameter\20241101_YKJ_ASX_Test_Final.vasm` 열기
+- `File Name`을 `YYYYMMDD H1H2H3.vqud` 형식으로 변경
+- `Sample Type`을 `Sample`로 선택
+- 랙 범위 선택 후 `Add to Table`
+- `C:\UVVis-Data\Parameter\YYYY\MM\YYYYMMDD_YKJ_ASX_Test_Final_H1,2,3.vasm` 저장
+
+특수 케이스:
+
+- 시료 수 `178` 입력 시 `Rack 1 = 7A -> 12E`, `Rack 2 = 1A -> 12E`, `Rack 3 = 1A -> 10E`
+
+버튼2도 실패 분석용 로그와 스크린샷을 `logs/` 폴더에 남깁니다.
 
 ## 권장 자동화 흐름
 
