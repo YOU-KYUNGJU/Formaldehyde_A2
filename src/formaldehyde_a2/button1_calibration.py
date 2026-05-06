@@ -11,9 +11,11 @@ import os
 import shutil
 import subprocess
 import time
+import tkinter as tk
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
+from tkinter import messagebox
 
 
 ASX_TITLE = "ASX-560 Controller for LabSolutions UV-Vis"
@@ -503,6 +505,20 @@ def save_vasm_from_save_dialog(paths, dry_run=False):
     time.sleep(0.8)
 
 
+def show_completion_popup(title, message, dry_run=False):
+    if dry_run:
+        print(f"[dry-run] popup {title}: {message}")
+        return
+
+    popup_root = tk.Tk()
+    popup_root.withdraw()
+    popup_root.attributes("-topmost", True)
+    try:
+        messagebox.showinfo(title, message, parent=popup_root)
+    finally:
+        popup_root.destroy()
+
+
 def run_button1_calibration(paths, dry_run=False, launcher_path=None):
     LOGGER.write("Calibration automation values:")
     LOGGER.write(f"- date: {paths.date_text}")
@@ -554,6 +570,7 @@ def run_button1_calibration(paths, dry_run=False, launcher_path=None):
         "Save As and Close",
     )
     save_vasm_from_save_dialog(paths, dry_run)
+    show_completion_popup("Button 1 Complete", "Calibration setup is ready.", dry_run=dry_run)
 
     print("Done.")
 

@@ -37,6 +37,7 @@ ROW_LABELS = tuple(range(1, 13))
 COLUMN_LABELS = ("A", "B", "C", "D", "E")
 DEFAULT_SOURCE_VASM = r"C:\UVVis-Data\Parameter\20241101_YKJ_ASX_Test_Final.vasm"
 DEFAULT_SAMPLE_COUNT = 178
+FINAL_RACK_AFTER_SAVE = 3
 
 
 @dataclass
@@ -225,6 +226,13 @@ def save_measurement_vasm(paths, dry_run=False):
 
 
 def reopen_setting_and_move_to_rack(asx_hwnd, target_rack, dry_run=False):
+    common.LOGGER.write(
+        f"Reopening Analysis Setting after save. Target: Sample Type Sample, Rack {target_rack}."
+    )
+    if not dry_run:
+        common.activate_window(asx_hwnd, target_size=common.ASX_TARGET_SIZE)
+        time.sleep(0.8)
+
     setting_hwnd = common.open_setting_window_from_edit_with_retry(asx_hwnd, dry_run, "ASX Edit reopen")
     common.activate_window(setting_hwnd, target_size=common.SETTING_TARGET_SIZE, target_position=(30, 30))
     common.click_reference(
@@ -310,11 +318,9 @@ def run_button2_sample_measurement(paths, sample_count, dry_run=False, launcher_
     )
     common.LOGGER.screenshot("after_sample_type_click")
 
-    reopening_target_rack = None
     current_rack = 1
     for selection in plan:
         if selection.rack_number >= 3:
-            reopening_target_rack = selection.rack_number
             common.LOGGER.write(
                 f"- deferred rack {selection.rack_number}: reopen Setting after save and move only"
             )
@@ -336,12 +342,19 @@ def run_button2_sample_measurement(paths, sample_count, dry_run=False, launcher_
     )
     save_measurement_vasm(paths, dry_run)
 
-    if reopening_target_rack is not None:
-        reopen_setting_and_move_to_rack(
-            asx_hwnd,
-            target_rack=reopening_target_rack,
-            dry_run=dry_run,
-        )
+    if not dry_run:
+        time.sleep(1.0)
+        asx_hwnd = common.wait_for_window(common.ASX_TITLE, timeout=20)
+    reopen_setting_and_move_to_rack(
+        asx_hwnd,
+        target_rack=FINAL_RACK_AFTER_SAVE,
+        dry_run=dry_run,
+    )
+    common.show_completion_popup(
+        "Button 2 Complete",
+        "Please select Rack 3 and click Save and Close.",
+        dry_run=dry_run,
+    )
 
     print("Done.")
 

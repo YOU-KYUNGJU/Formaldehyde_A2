@@ -23,10 +23,11 @@ QUANTITATION_TITLE = "Quantitation - [Analysis]"
 INSTRUMENT_PROCESS_NAME = "UVNavi.exe"
 INSTRUMENT_CLASS_NAME = "#32770"
 
-S1_BUTTON = (99, 260)
-S2_BUTTON = (128, 260)
-MOVE_BUTTON = (89, 138)
-UP_DOWN_BUTTON = (202, 142)
+ASX_ROW_OFFSET = 20
+S1_BUTTON = (99, 260 + ASX_ROW_OFFSET)
+S2_BUTTON = (128, 260 + ASX_ROW_OFFSET)
+MOVE_BUTTON = (89, 138 + ASX_ROW_OFFSET)
+UP_DOWN_BUTTON = (202, 142 + ASX_ROW_OFFSET)
 SIP_BUTTON = (58, 471)
 AUTO_ZERO_BUTTON = (69, 644)
 INST_CONTROL_BUTTON = (953, 83)
@@ -39,7 +40,8 @@ QUANTITATION_TARGET_POSITION = (581, 70)
 INSTRUMENT_TARGET_POSITION = (853, 201)
 MOVE_SETTLE_SECONDS = 5
 INST_CONTROL_OPEN_SECONDS = 5
-SIP_WAIT_SECONDS = 40
+SIP_WAIT_SECONDS = 30
+AUTO_ZERO_WAIT_SECONDS = 3
 
 
 class StatusTooltip:
@@ -285,10 +287,12 @@ def run_instrument_cycle(instrument_hwnd, tooltip, include_second_auto_zero, dry
     click_instrument(instrument_hwnd, SIP_BUTTON, "Instrument Control Sip", tooltip, dry_run)
     wait_with_status(SIP_WAIT_SECONDS, "Wait after Sip", tooltip, dry_run)
     click_instrument(instrument_hwnd, AUTO_ZERO_BUTTON, "Instrument Control Auto Zero", tooltip, dry_run)
+    wait_with_status(AUTO_ZERO_WAIT_SECONDS, "Wait after Auto Zero", tooltip, dry_run)
     click_instrument(instrument_hwnd, SIP_BUTTON, "Instrument Control Sip", tooltip, dry_run)
     if include_second_auto_zero:
         wait_with_status(SIP_WAIT_SECONDS, "Wait after Sip", tooltip, dry_run)
         click_instrument(instrument_hwnd, AUTO_ZERO_BUTTON, "Instrument Control Auto Zero", tooltip, dry_run)
+        wait_with_status(AUTO_ZERO_WAIT_SECONDS, "Wait after Auto Zero", tooltip, dry_run)
 
 
 def show_completion_prompt(dry_run=False):
